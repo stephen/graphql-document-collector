@@ -12,9 +12,14 @@ import cbGlob = require('glob');
 const readFile = promisify(fs.readFile);
 const glob = promisify(cbGlob);
 
-export function loadDocument(path: string): Promise<Document> {
-  return readFile(path)
-  .then((fileBuffer: Buffer) => parse(fileBuffer.toString()));
+export function loadDocument(pt: string): Promise<Document> {
+  const splitPath = pt.split(path.sep);
+  return readFile(pt)
+  .then((fileBuffer: Buffer) => parse(fileBuffer.toString()))
+  .then(doc => Object.assign({},
+    doc,
+    {name: {kind: 'Name', value: splitPath[splitPath.length - 1]}}
+  ));
 }
 
 export interface DocumentDirectory {

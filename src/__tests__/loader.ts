@@ -20,6 +20,7 @@ describe('GraphQL project loader', () => {
       ))
       .then((doc: Document) => {
         assert.equal(doc.kind, 'Document');
+        assert.equal((doc as any).name.value, 'ListMovies.graphql');
         assert.equal(doc.definitions.length, 1);
         assert.equal(doc.definitions[0].kind, 'OperationDefinition');
         assert.equal(
@@ -35,6 +36,7 @@ describe('GraphQL project loader', () => {
       ))
       .then((doc: Document) => {
         assert.equal(doc.kind, 'Document');
+        assert.equal((doc as any).name.value, 'Movie.graphql');
         assert.equal(doc.definitions.length, 1);
         assert.equal(doc.definitions[0].kind, 'FragmentDefinition');
         assert.equal(
