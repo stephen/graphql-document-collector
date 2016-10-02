@@ -3,7 +3,7 @@ import {
   Name,
 } from 'graphql';
 import {parse} from 'graphql-tag/parser';
-import {promisify} from './promisify';
+import {promisify} from './util/promisify';
 
 import fs = require('fs');
 import path = require('path');
@@ -16,7 +16,7 @@ export function loadDocument(pt: string): Promise<Document> {
   const splitPath = pt.split(path.sep);
   return readFile(pt)
   .then((fileBuffer: Buffer) => parse(fileBuffer.toString()))
-  .then(doc => Object.assign({},
+  .then((doc: any) => Object.assign({},
     doc,
     {name: {kind: 'Name', value: splitPath[splitPath.length - 1]}}
   ));
