@@ -1,0 +1,5 @@
+fragment Movie on Film {
+  id
+  title
+  director
+}
