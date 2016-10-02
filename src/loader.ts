@@ -1,9 +1,9 @@
 import {
   Document,
-  Name,
 } from 'graphql';
 import {parse} from 'graphql-tag/parser';
 import {promisify} from './util/promisify';
+import {DocumentDirectory} from './ast';
 
 import fs = require('fs');
 import path = require('path');
@@ -21,13 +21,6 @@ export function loadDocument(pt: string): Promise<Document> {
     {name: {kind: 'Name', value: splitPath[splitPath.length - 1]}}
   ));
 }
-
-export interface DocumentDirectory {
-  kind: 'DocumentDirectory';
-  name: Name,
-  documents: Document[];
-  directories: DocumentDirectory[];
-};
 
 function loadDirectory(basePath: string[], paths: string[][]): Promise<DocumentDirectory> {
   const documentFileNames = paths.filter(pt => pt.length === 1).map(pt => pt[0]);

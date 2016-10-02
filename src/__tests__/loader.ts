@@ -7,8 +7,10 @@ import {assert} from 'chai';
 import {
   loadDocument,
   loadGlob,
-  DocumentDirectory,
 } from '../loader';
+import {
+  DocumentDirectory,
+} from '../ast';
 
 import path = require('path');
 
