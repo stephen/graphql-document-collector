@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const {default: loadTransformAndFlatten} = require('../lib');
+
+const [nodeExec, cgqlExec, glob] = process.argv;
+
+loadTransformAndFlatten(process.cwd(), glob)
+.then(flatMap => {
+  process.stdout.write(JSON.stringify(flatMap));
+  process.exit(0);
+});
