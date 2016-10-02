@@ -31,8 +31,12 @@
   },
   "dependencies": {
     "@types/chai": "^3.4.34",
+    "@types/glob": "^5.0.30",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.41",
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "glob": "^7.1.0",
+    "graphql-tag": "^0.1.14",
+    "typed-graphql": "^1.0.2"
   }
 }
