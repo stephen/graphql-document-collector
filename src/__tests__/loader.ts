@@ -4,7 +4,11 @@ import {
   FragmentDefinition,
 } from 'graphql';
 import {assert} from 'chai';
-import {loadDocument} from '../loader';
+import {
+  loadDocument,
+  loadGlob,
+  DocumentDirectory,
+} from '../loader';
 
 import path = require('path');
 
@@ -36,6 +40,38 @@ describe('GraphQL project loader', () => {
         assert.equal(
           (doc.definitions[0] as FragmentDefinition).name.value,
           'Movie'
+        );
+      });
+    });
+  });
+
+  describe('loadGlob', () => {
+    it('should load the whole structure of documents in an extended AST', () => {
+      return Promise.all([
+        loadGlob(
+          path.join(__dirname, '..', '..', 'example'),
+          '**/*.graphql'
+        ),
+        loadDocument(path.join(
+          __dirname, '..', '..', 'example', 'queries', 'ListMovies.graphql'
+        )),
+        loadDocument(path.join(
+          __dirname, '..', '..', 'example', 'fragments', 'onFilm', 'Movie.graphql'
+        )),
+      ])
+      .then(([root, queryDoc, fragmentDoc]: any[]) => {
+        assert.equal(root.kind, 'DocumentDirectory');
+        assert.equal(root.name.value, 'example');
+        assert.equal(root.directories[0].name.value, 'fragments');
+        assert.equal(root.directories[0].directories[0].name.value, 'onFilm');
+        assert.deepEqual(
+          root.directories[0].directories[0].documents[0],
+          fragmentDoc
+        );
+        assert.equal(root.directories[1].name.value, 'queries');
+        assert.deepEqual(
+          root.directories[1].documents[0],
+          queryDoc
         );
       });
     });
