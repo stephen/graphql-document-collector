@@ -6,7 +6,9 @@ import {
 import {
   createFragmentMap,
   addFragmentsToDocument,
+  resolveFragments,
 } from '../resolveFragments';
+import {DocumentDirectory} from '../../ast';
 
 import path = require('path');
 
@@ -31,23 +33,28 @@ describe('Resolve fragments transformer', () => {
 
   describe('addFragmentsToDocument', () => {
     it('should resolve all nested fragments', () => {
-      return Promise.all([
-        loadGlob(
-          path.join(__dirname, '..', '..', '..', 'example'),
-          '**/*.graphql'
-        ),
-        loadDocument(path.join(
-          __dirname, '..', '..', '..', 'example', 'fragments', 'onFilm', 'Movie.graphql'
-        )),
-        loadDocument(path.join(
-          __dirname, '..', '..', '..', 'example', 'fragments', 'onPlanet', 'Place.graphql'
-        )),
-      ])
-      .then(([root, movieFragDoc, placeFragDoc]: any[]) => {
+      return loadGlob(
+        path.join(__dirname, '..', '..', '..', 'example'),
+        '**/*.graphql'
+      )
+      .then((root: DocumentDirectory) => {
         const fMap = createFragmentMap(root);
         const origDoc = root.directories[1].documents[0];
         const transformedDoc = addFragmentsToDocument(origDoc, fMap);
         assert.equal(transformedDoc.definitions.length, 3);
+      });
+    });
+  });
+
+  describe('resolveFragments', () => {
+    it('should resolve all nested fragments in inner docs', () => {
+      return loadGlob(
+        path.join(__dirname, '..', '..', '..', 'example'),
+        '**/*.graphql'
+      )
+      .then((root: DocumentDirectory) => {
+        const transformedRoot = resolveFragments(root);
+        assert.equal(transformedRoot.directories[1].documents[0].definitions.length, 3);
       });
     });
   });

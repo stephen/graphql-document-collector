@@ -59,8 +59,22 @@ export function addFragmentsToDocument(document: Document, fMap: FragmentMap): D
   });
 }
 
-export function resolveFragmentsInOperations(
-  root: DocumentDirectory
+
+
+export function resolveFragments(
+  dir: DocumentDirectory,
+  fMap: FragmentMap = null
 ): DocumentDirectory {
-  return root;
+  if (!fMap) {
+    fMap = createFragmentMap(dir);
+  }
+
+  return Object.assign({}, dir, {
+    directories: dir.directories.map(subDir =>
+      resolveFragments(subDir, fMap)
+    ),
+    documents: dir.documents.map(doc =>
+      addFragmentsToDocument(doc, fMap)
+    ),
+  });
 }
