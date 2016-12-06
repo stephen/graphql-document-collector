@@ -9,10 +9,10 @@ npm i -g graphql-document-collector
 
 ## Usage
 
-`collect-gql` has a straightforward CLI interface to precompile all of your GraphQL documents in one definition file:
+`graphql-document-collector` has a straightforward CLI interface to precompile all of your GraphQL documents in one definition file:
 
 ```
-collect-gql '$glob' > $dest
+graphql-document-collector '$glob' > $dest
 ```
 
 ## Example
@@ -20,7 +20,7 @@ collect-gql '$glob' > $dest
 Collect all `.graphql` files of your project in a single `documents.json` definition file:
 
 ```
-collect-gql '**/*.graphql' > documents.json
+graphql-document-collector '**/*.graphql' > documents.json
 ```
 
 This can be exploited afterwards like this:

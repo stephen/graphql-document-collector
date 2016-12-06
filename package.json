@@ -1,8 +1,11 @@
 {
   "name": "graphql-document-collector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Load up smartly, in one location, all of the GraphQL queries/mutations/subscriptions of your project",
   "main": "lib",
+  "bin": {
+    "graphql-document-collector": "./bin/graphql-document-collector"
+  },
   "scripts": {
     "test": "mocha 'lib/**/__tests__/*.js'",
     "compile": "tsc",
