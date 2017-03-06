@@ -1,4 +1,6 @@
 # graphql-document-collector
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/apollographql/graphql-document-collector.svg)](https://greenkeeper.io/)
 Load up smartly, in one location, all of the GraphQL queries/mutations/subscriptions of your project
 
 ## Installation
