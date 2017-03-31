@@ -24,5 +24,6 @@ export default function loadTransformAndFlatten(
   return loadGlob(basePath, globPath)
   .then(root =>
     flattenDirectoryStructure(applyTransforms(root, ...transforms))
-  );
+  )
+  .catch(err => console.log(err.stack));
 }
