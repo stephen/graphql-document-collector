@@ -1,6 +1,6 @@
 {
   "name": "graphql-document-collector",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Load up smartly, in one location, all of the GraphQL queries/mutations/subscriptions of your project",
   "main": "lib",
   "bin": {
@@ -29,6 +29,10 @@
   },
   "homepage": "https://github.com/rricard/graphql-document-collector#readme",
   "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/glob": "^5.0.30",
+    "@types/node": "^6.0.41",
+    "@types/mocha": "^2.2.32",
     "mocha": "^3.1.0",
     "chai": "^3.5.0",
     "typescript": "^2.0.3",
@@ -36,8 +40,6 @@
     "@types/mocha": "^2.2.32"
   },
   "dependencies": {
-    "@types/glob": "^5.0.30",
-    "@types/node": "^6.0.41",
     "glob": "^7.1.0",
     "graphql-tag": "^0.1.14",
     "typed-graphql": "^1.0.2"
