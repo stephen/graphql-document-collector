@@ -34,10 +34,12 @@
     "@types/node": "^6.0.41",
     "@types/mocha": "^2.2.32",
     "mocha": "^3.1.0",
-    "typescript": "^2.0.3"
+    "chai": "^3.5.0",
+    "typescript": "^2.0.3",
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.32"
   },
   "dependencies": {
-    "chai": "^3.5.0",
     "glob": "^7.1.0",
     "graphql-tag": "^0.1.14",
     "typed-graphql": "^1.0.2"
