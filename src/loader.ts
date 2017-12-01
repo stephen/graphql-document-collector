@@ -1,7 +1,5 @@
-import {
-  Document,
-} from 'graphql';
-import {parse} from 'graphql-tag/parser';
+import {DocumentNode} from 'graphql';
+import {parse} from 'graphql';
 import {promisify} from './util/promisify';
 import {DocumentDirectory} from './ast';
 
@@ -12,7 +10,7 @@ import cbGlob = require('glob');
 const readFile = promisify(fs.readFile);
 const glob = promisify(cbGlob);
 
-export function loadDocument(pt: string): Promise<Document> {
+export function loadDocument(pt: string): Promise<DocumentNode> {
   const splitPath = pt.split(path.sep);
   return readFile(pt)
   .then((fileBuffer: Buffer) => parse(fileBuffer.toString()))
@@ -46,7 +44,7 @@ function loadDirectory(basePath: string[], paths: string[][]): Promise<DocumentD
       },
       documents,
       directories,
-    };
+    } as DocumentDirectory;
   });
 }
 
