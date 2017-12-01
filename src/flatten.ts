@@ -1,8 +1,8 @@
-import {Document} from 'graphql';
+import {DocumentNode} from 'graphql/language/ast';
 import {DocumentDirectory} from './ast';
 
 export interface DocumentFlatMap {
-  [docPath: string]: Document;
+  [docPath: string]: DocumentNode;
 }
 
 export function flattenDirectoryStructure(
