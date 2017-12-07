@@ -12,7 +12,9 @@ describe('Load, Transform and Flatten', () => {
       '**/*.graphql'
     )
     .then(docMap => {
-      assert.deepEqual(docMap, documentsJson);
+      // graphql-js adds extra properties to the AST nodes that do not
+      // not show up when toJSON is called.
+      assert.deepEqual(JSON.parse(JSON.stringify(docMap)), documentsJson);
     });
   });
 });

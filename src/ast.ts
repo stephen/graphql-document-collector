@@ -1,11 +1,11 @@
 import {
-  Document,
-  Name,
+  DocumentNode,
+  NameNode,
 } from 'graphql';
 
 export interface DocumentDirectory {
   kind: 'DocumentDirectory';
-  name: Name,
-  documents: Document[];
+  name: NameNode,
+  documents: DocumentNode[];
   directories: DocumentDirectory[];
 };

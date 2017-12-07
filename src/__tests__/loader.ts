@@ -1,7 +1,7 @@
 import {
-  Document,
-  OperationDefinition,
-  FragmentDefinition,
+  DocumentNode,
+  OperationDefinitionNode,
+  FragmentDefinitionNode,
 } from 'graphql';
 import {assert} from 'chai';
 import {
@@ -20,13 +20,13 @@ describe('GraphQL project loader', () => {
       return loadDocument(path.join(
         __dirname, '..', '..', 'example', 'queries', 'ListMovies.graphql'
       ))
-      .then((doc: Document) => {
+      .then((doc: DocumentNode) => {
         assert.equal(doc.kind, 'Document');
         assert.equal((doc as any).name.value, 'ListMovies.graphql');
         assert.equal(doc.definitions.length, 1);
         assert.equal(doc.definitions[0].kind, 'OperationDefinition');
         assert.equal(
-          (doc.definitions[0] as OperationDefinition).name.value,
+          (doc.definitions[0] as OperationDefinitionNode).name.value,
           'ListMovies'
         );
       });
@@ -36,13 +36,13 @@ describe('GraphQL project loader', () => {
       return loadDocument(path.join(
         __dirname, '..', '..', 'example', 'fragments', 'onFilm', 'Movie.graphql'
       ))
-      .then((doc: Document) => {
+      .then((doc: DocumentNode) => {
         assert.equal(doc.kind, 'Document');
         assert.equal((doc as any).name.value, 'Movie.graphql');
         assert.equal(doc.definitions.length, 1);
         assert.equal(doc.definitions[0].kind, 'FragmentDefinition');
         assert.equal(
-          (doc.definitions[0] as FragmentDefinition).name.value,
+          (doc.definitions[0] as FragmentDefinitionNode).name.value,
           'Movie'
         );
       });

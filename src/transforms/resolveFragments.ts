@@ -1,15 +1,15 @@
 import {
-  Document,
-  FragmentDefinition,
-  OperationDefinition,
-  SelectionSet,
-  FragmentSpread,
-  Field,
+  DocumentNode,
+  FragmentDefinitionNode,
+  OperationDefinitionNode,
+  SelectionSetNode,
+  FragmentSpreadNode,
+  FieldNode,
 } from 'graphql';
 import {DocumentDirectory} from '../ast';
 
 export interface FragmentMap {
-  [fragmentName: string]: FragmentDefinition;
+  [fragmentName: string]: FragmentDefinitionNode;
 }
 
 export function createFragmentMap(
@@ -18,7 +18,7 @@ export function createFragmentMap(
   // TODO: make this function pure
   dir.documents.forEach(doc => doc.definitions.forEach(def => {
     if (def.kind === 'FragmentDefinition') {
-      const fragDef = (def as FragmentDefinition);
+      const fragDef = (def as FragmentDefinitionNode);
       fragmentMap[fragDef.name.value] = fragDef;
     }
   }));
@@ -27,27 +27,27 @@ export function createFragmentMap(
 }
 
 function fragmentSpreadsInSelectionSet(
-  selSet: SelectionSet, fMap: FragmentMap, fragmentSpreads: Set<string>
+  selSet: SelectionSetNode, fMap: FragmentMap, fragmentSpreads: Set<string>
 ): Set<string> {
   // TODO: make this function pure
   selSet.selections.forEach(sel => {
     if (sel.kind === 'FragmentSpread') {
-      const fragmentName = (sel as FragmentSpread).name.value;
+      const fragmentName = (sel as FragmentSpreadNode).name.value;
       fragmentSpreads.add(fragmentName);
       fragmentSpreadsInSelectionSet(fMap[fragmentName].selectionSet, fMap, fragmentSpreads);
-    } else if (sel.kind === 'Field' && (sel as Field).selectionSet) {
-      fragmentSpreadsInSelectionSet((sel as Field).selectionSet, fMap, fragmentSpreads);
+    } else if (sel.kind === 'Field' && (sel as FieldNode).selectionSet) {
+      fragmentSpreadsInSelectionSet((sel as FieldNode).selectionSet, fMap, fragmentSpreads);
     }
   });
   return fragmentSpreads;
 }
 
-export function addFragmentsToDocument(document: Document, fMap: FragmentMap): Document {
+export function addFragmentsToDocument(document: DocumentNode, fMap: FragmentMap): DocumentNode {
   // TODO: make this function pure
   let fragmentSpreads: Set<string> = new Set()
   document.definitions.forEach(def => {
     if (def.kind === 'OperationDefinition' || def.kind === 'FragmentDefinition') {
-      const selSetDef = (def as OperationDefinition|FragmentDefinition);
+      const selSetDef = (def as OperationDefinitionNode|FragmentDefinitionNode);
       fragmentSpreadsInSelectionSet(selSetDef.selectionSet, fMap, fragmentSpreads)
     }
   });
